@@ -1,0 +1,27 @@
+cari data<br>
+
+<form method="GET">
+<input class="form-control border-secondary py-2" id="search" name="search" value="" type="search" placeholder="search">
+<button class="btn btn-outline-secondary" onclick="myFunction()" id="button"  type="submit" name="submit" value="submit"> Cari Data
+</button>
+</form>
+<div id="match_list"></div>
+<table id="myTable">
+    <tr>
+      <th>kata input</th>
+      <th>koreksi kata<br>(levenshtein)</th>
+      <th>similarity<br>(levenshtein)</th>
+      <th>waktu<br>(levenshtein)(ms)</th>
+      <th>koreksi kata<br>(jaro-winkler)</th>
+      <th>similarity<br>(jaro-winkler)</th>
+      <th>waktu<br>(jaro-winkler)(ms)</th>
+      <th>koreksi kata<br>(damerau-levenshtein)</th>
+      <th>similarity<br>(damerau-levenshtein)</th>
+      <th>waktu<br>(damerau-levenshtein)(ms)</th>
+    </tr>
+    <tr>
+      
+    </tr>
+  </table>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="../test.js"></script>

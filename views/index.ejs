@@ -1,0 +1,37 @@
+<%- include('./partial/search.ejs') %> 
+
+<div class="card ml-5 mt-4 col-10" >
+<div class="row mr-2 mt-4 ml-2">
+    <% data_ikm.forEach(function(data){ %>
+        <div class="col-sm-3 mb-3 d-flex align-items-stretch">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"><%= data.nama_perusahaan %></h5>
+                <p class="card-text"><%= data.nama_pemilik  %></p>
+                <p class="card-text">Alamat : Ds/Kel. <%= data.nama_desa  %>, Kecamatan <%= data.nama_kec  %> </p>
+              </div>
+            </div>
+          </div>
+        
+    <%}); %> 
+</div>
+</div>
+<div style="text-align: center;margin-top: 30px;">
+  <% if(pages>2){%>
+    <a href=<%- url+"/?page=1&limit="+limits %> class="btn btn-primary">First</a>
+    <%}%> 
+<a href=<%- url+"/?page="+(pages-1)+"&limit="+limits  %>
+    <% if(pages===1){ %>
+        class="disabled btn btn-primary"
+    <% } else{%>
+        class="btn btn-primary"
+    <% }%>  
+    >Back</a>
+     
+<a href=<%- url+"/?page="+(pages+1)+"&limit="+limits %>
+  <% if(pages==Math.ceil(end/limits)){%>
+    class="btn btn-primary disabled"
+    <% }else{ %>
+      class="btn btn-primary"
+   <%  }  %> >Next</a>
+</div>

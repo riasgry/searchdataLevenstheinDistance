@@ -1,0 +1,22 @@
+
+        <form action="/pencarian" method="GET">
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input  type="text" class="  search-query form-control" id="search" name="search" 
+                        <%
+                        if(title == 'pencarian'){ %>
+                            value="<%- text_input %>"
+                        <%}else{%>
+                            value=""
+                        <%}%> type="search" placeholder="search" required>
+                   <span class="input-group-btn">
+                        <button class="btn btn-danger"  type="submit" name="submit" value="submit">Cari Data
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            </form>
+
+            <script type="text/javascript" src="../main.js"></script> 
+    

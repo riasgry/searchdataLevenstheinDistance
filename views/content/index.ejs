@@ -1,0 +1,53 @@
+<%- include('../partial/search.ejs') %> 
+<br>
+<% if(data_ikm.length==0||jarak!=null){
+    const cekjarak = jarak.find(element => element < 1);
+    if(cekjarak<1){ %> 
+      <div class="notice notice-info">
+        <%- "Apakah yang anda Maksud: <a href='"+url+hasil.slice(0, -1).replace(/\s/g, '+')+"'>"+hasil.slice(0, -1)+"</a>" %> </p>
+    </div>
+    <p><% }
+}
+ %> 
+<div class="card ml-5 mt-4 col-10" >
+
+    <header class="card-header">
+          <h6 class="title">Hasil data<br></h6>
+    </header>
+
+<div class="row mr-3 mt-4 ml-5">
+    <%if(data_ikm.length>0){
+             data_ikm.forEach(function(data){ %>
+                <div class="col-sm-3 mb-3 d-flex align-items-stretch">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"><%= data.nama_perusahaan %></h5>
+                <p class="card-text"><%= data.nama_pemilik  %></p>
+                <p class="card-text">Alamat : Ds/Kel. <%= data.nama_desa  %>, Kecamatan <%= data.nama_kec  %> </p>
+              </div>
+            </div>
+          </div>
+          
+            <%}); %>
+          </div>
+        </div>
+            <br>
+        <div style="text-align: center;margin-top: 30px;">
+        <% if(pages>2){%>
+          <a href = <%- url+hasil.slice(0, -1).replace(/\s/g, '+')+"&page=1&limit="+limits %> class="btn btn-primary">First</a>
+        <%}%> 
+          <a href= <%- url+hasil.slice(0, -1).replace(/\s/g, '+')+"&page="+(pages-1)+"&limit="+limits  %>
+        <% if(pages===1){ %>
+          class="disabled btn btn-primary"
+        <% } else{%>
+          class="btn btn-primary"
+        <% } %>  
+          >Back</a>
+      <a href = <%- url+hasil.slice(0, -1).replace(/\s/g, '+')+"&page="+(pages+1)+"&limit="+limits %> class="btn btn-primary">Next</a>
+      </div>
+    <%}else{ %>
+            <p> Maaf Sistem kami tidak menemukan data untuk kata kunci <strong><%- text_input %></strong>  </p>
+            </div>
+        <% } %> 
+
+    
