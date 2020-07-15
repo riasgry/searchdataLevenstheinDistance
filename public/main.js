@@ -35,7 +35,7 @@ const searchStates = async searchText =>{
 			
 }
 let typingTimer;                //timer identifier
-let doneTypingInterval = 0;  //time in ms (5 seconds)
+let doneTypingInterval = 100;  //time in ms (5 seconds)
 search.addEventListener('input',() => {
     clearTimeout(typingTimer);
     if (search.value) {
