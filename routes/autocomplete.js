@@ -43,7 +43,7 @@ router.post('/autocomplete/getInput', (req, res,next)=>{
             return distance.match(regex)
         })
         if(matches.length>0){
-            res.send(matches.slice(0,5))
+            res.send(matches)
         }
         else{
             for(let i=0;i<inputkeywords.length;i++){
