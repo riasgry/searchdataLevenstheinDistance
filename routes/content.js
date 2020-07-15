@@ -28,27 +28,15 @@ router.get('/',cekQuery, (req, res,next)=>{
 		inputkeywords = str.split(/[\s,!]+/);
 		res.locals.key=inputkeywords
 		res.locals.search=searchOption.search
+		
 
 	next();
 },
 	function(req,res,next){
-	request(process.env.API_URL, function(error, response, body){
+	request(process.env.API_URL_KEY, function(error, response, body){
 		const json = JSON.parse(body);
-		var text_processing=[];
-		var kamus_data=[];
-		json.forEach(data => {
-			let lowerCase = data.nama_perusahaan.toLowerCase();
-			let str = lowerCase.replace(/[^\w\s]/gi, '')
-			var splitter = str.split(/[\s,!]+/);
-			text_processing.push(splitter)  
-		});
-		function UnionSet(arr1,arr2){
-			return new Set([...arr1,...arr2])
-		}
-		let set = text_processing.reduce(UnionSet);
-		let AllKey = [...set];
-		kamus_data.push(AllKey);
-		res.locals.allkeywords=kamus_data
+		res.locals.allkeywords=json
+		
 		next();
 		})
 	},function(req,res,next){
@@ -57,7 +45,6 @@ router.get('/',cekQuery, (req, res,next)=>{
 		const semua_kata = res.locals.allkeywords;
 		var distance_words=[];
 		var number_distance=[];
-		var five_result=[];
 		var correct_word="";
 		for(let i=0;i<kata_input.length;i++){
 			var start_performance = now()
@@ -66,29 +53,23 @@ router.get('/',cekQuery, (req, res,next)=>{
 				//var distances = distance(semua_kata[0][a],kata_input[i])
 				var distances = ((semua_kata[0][a].length+kata_input[i].length)-(levenshtein(semua_kata[0][a],kata_input[i])))/(semua_kata[0][a].length+kata_input[i].length)
 				   distance_words[semua_kata[0][a]] = distances;
+				   
 				
 			}
 			const maxMinVal = (distance_words) => {
 				let sortedEntriesByVal = Object.entries(distance_words).sort(([, v1], [, v2]) => v2 - v1);
-				let five_result=[];
-    			for(let a=0;a<5;a++){
-    				five_result.push(sortedEntriesByVal[a]);
-    			}
+				
 				   return {
-					   top5: five_result,
+					 
 					   min: sortedEntriesByVal[0],
 					};
 			};
 			number_distance.push(maxMinVal(distance_words).min[1]);
 			correct_word+=maxMinVal(distance_words).min[0]+" ";
-			five_result.push(maxMinVal(distance_words).top5);
-			console.log(maxMinVal(distance_words).top5);
-	
+			console.log(maxMinVal(distance_words).min,"/n koreksi kata = "+correct_word)
 		}
 		res.locals.hasilJarak=number_distance
 		res.locals.koreksiKata=correct_word
-		res.locals.fiveresult=five_result
-
 		var end_performance = now()
 
 		//console.log(`${req.query.search},${correct_word},${number_distance},${end_performance-start_performance}`)
@@ -115,16 +96,23 @@ router.get('/',cekQuery, (req, res,next)=>{
 		const startIndex= (page -1)* limit
 		const endIndex = page * limit
 		const result=json.slice(startIndex, endIndex)
-		res.render('content',{
-			title: 'pencarian',
-			data_ikm: result,
-			text_input:input,
-			hasil: correct_word,
-			pages: parseInt(page),
-			limits: parseInt(limit),
-			jarak: number_distance,
-			url: process.env.BASE_URL+"/pencarian?search="
-		})
+		const lastPage = Math.ceil(json.length/limit)
+		if(page>lastPage){
+			res.redirect(process.env.BASE_URL+"/pencarian?search="+input+"&page="+(lastPage)+"&limit="+limit)
+		}
+		else{
+			res.render('content',{
+				title: 'pencarian',
+				data_ikm: result,
+				text_input:input,
+				hasil: correct_word,
+				pages: parseInt(page),
+				limits: parseInt(limit),
+				jarak: number_distance,
+				lastPages:parseInt(lastPage),
+				url: process.env.BASE_URL+"/pencarian?search="
+			})
+		}
 		
 	});
 	

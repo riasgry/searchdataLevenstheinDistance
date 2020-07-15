@@ -34,6 +34,8 @@ app.post('/autocomplete/getInput',autocompleteRouter);
 
 app.use(express.json());
 app.use('/api/data_ikm',apiRoutes);
+app.use('/api/data_ikm/allkeys',apiRoutes);
+app.use('/api/data_ikm/autocomplete',apiRoutes);
 app.use('/api/data_ikm/search',apiRoutes);
 app.listen(process.env.PORT || '3000',()=>{
 	console.log(`Server is runng on port: ${process.env.PORT || '3000'}`);

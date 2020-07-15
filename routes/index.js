@@ -4,7 +4,7 @@ const request = require('request');
 const app = express();
 const router = express.Router();
 
-router.get('/', (req, res)=>{
+router.get('/', (req, res,)=>{
 	request(process.env.API_URL, function(error, response, body){
 		const json = JSON.parse(body);
 		let page = req.query.page
@@ -15,15 +15,22 @@ router.get('/', (req, res)=>{
 		}
 		const startIndex= (page -1)* limit
 		const endIndex = page * limit
-		const result=json.slice(startIndex, endIndex)
-		res.render('index',{
-			title:'main',
-			data_ikm: result,
-			end:json.length,
-			pages: parseInt(page),
-			limits: parseInt(limit),
-			url: process.env.BASE_URL
-		});
+		const lastPage = Math.ceil(json.length/limit)
+		if(page>lastPage){
+			res.redirect(process.env.BASE_URL+"/?page="+(lastPage)+"&limit="+limit)
+		}
+		else{
+			const result=json.slice(startIndex, endIndex)
+			res.render('index',{
+				title:'main',
+				data_ikm: result,
+				end:json.length,
+				pages: parseInt(page),
+				limits: parseInt(limit),
+				lastPages:parseInt(lastPage),
+				url: process.env.BASE_URL
+			});
+		}
 	});
 })
 

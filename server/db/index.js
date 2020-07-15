@@ -1,12 +1,12 @@
 const mysql = require('mysql');
-
+require('dotenv').config()
 const pool = mysql.createConnection({
-	connectionLimit: 5,
-	password:'wCIRAKLjNLFXPxSI7cD5',
-	user:'ufc9u5cijesxyuab',
-	database:'b5pihhq4sfjuzo7i3o1r',
-	host:'b5pihhq4sfjuzo7i3o1r-mysql.services.clever-cloud.com',
-	port:'3306',
+	connectionLimit: 10,
+		host     : 'localhost',
+    	database : 'db_sidabikm',
+    	user     : 'root',
+    	password : '',
+		port:'3306',
 });
 
 let ikmdb={};
@@ -16,6 +16,18 @@ ikmdb.all=()=>{
 		pool.query(`select tabel_ikm.nama_perusahaan,tabel_desa.nama_desa,tabel_kecamatan.nama_kec from tabel_ikm
 		join tabel_desa on tabel_ikm.desa = tabel_desa.key_desa
 		join tabel_kecamatan on tabel_ikm.kecamatan = tabel_kecamatan.id_kec`,(err,results)=>{
+			if(err){
+				return reject(err);
+			}
+			return resolve(results);
+		});
+	});
+
+};
+
+ikmdb.allkeys=()=>{
+	return new Promise((resolve, reject)=>{
+		pool.query(`select nama_perusahaan from tabel_ikm`,(err,results)=>{
 			if(err){
 				return reject(err);
 			}
@@ -42,4 +54,8 @@ ikmdb.search=(keyword)=>{
 
 module.exports=ikmdb;
 
-//SELECT * FROM tabel_ikm WHERE MATCH(nama_perusahaan) AGAINST('bengkel rokhim makaroni' IN NATURAL LANGUAGE MODE)
+// host     : 'hv-par4-025.clvrcld.net',
+//     	database : 'bo40n9mm3cpe1w01cw2d',
+//     	user     : 'ui49a2xar20nbdie',
+//     	password : 'L15yVnFxzpcnjaS02Qvd',
+// 		port:'14051',

@@ -14,13 +14,11 @@ const searchStates = async searchText =>{
 						$.ajax({
 							type: 'POST',
 							url: '/autocomplete/getInput',
-							data: req={input:input} ,
+							data: req={input:input,inputs:searchText} ,
 							success: function(data) {
-								console.log(data)
 								res($.map(data, function(item) {
 									return {
-										label: item.nama_perusahaan,//text comes from a collection of mongo
-										value: item.nama_perusahaan
+										value: item
 									};
 								}));
 									
