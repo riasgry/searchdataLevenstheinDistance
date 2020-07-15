@@ -54,8 +54,4 @@ ikmdb.search=(keyword)=>{
 
 module.exports=ikmdb;
 
-// host     : 'hv-par4-025.clvrcld.net',
-//     	database : 'bo40n9mm3cpe1w01cw2d',
-//     	user     : 'ui49a2xar20nbdie',
-//     	password : 'L15yVnFxzpcnjaS02Qvd',
-// 		port:'14051',
+
