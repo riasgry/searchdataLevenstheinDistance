@@ -33,7 +33,7 @@ router.get('/',cekQuery, (req, res,next)=>{
 	next();
 },
 	function(req,res,next){
-	request(process.env.API_URL_KEY, function(error, response, body){
+	request(process.env.API_URL_AUTOKEY, function(error, response, body){
 		const json = JSON.parse(body);
 		res.locals.allkeywords=json
 		
