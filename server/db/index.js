@@ -1,12 +1,12 @@
 const mysql = require('mysql');
 require('dotenv').config()
 const pool = mysql.createConnection({
-	connectionLimit: 10,
-		host     : 'localhost',
-    	database : 'db_sidabikm',
-    	user     : 'root',
-    	password : '',
-		port:'3306',
+	connectionLimit: 5,
+	host     : process.env.MYSQL_ADDON_HOST,
+    	database : process.env.MYSQL_ADDON_DB,
+    	user     : process.env.MYSQL_ADDON_USER,
+    	password : process.env.MYSQL_ADDON_PASSWORD,
+	port:'14051',
 });
 
 let ikmdb={};
