@@ -75,11 +75,9 @@ router.get('/autocomplete', async (req, res, next)=>{
 			}
 			text_processing.push(splitter) 
 		});
-		function UnionSet(arr1,arr2){
-			return new Set([...arr1,...arr2])
-		}
-		let set = text_processing.reduce(UnionSet);
-		let AllKey = [...set];
+		let flatt = text_processing.flat()
+		
+		let AllKey = [...new Set(flatt)];
 		kamus_data.push(AllKey);
 		res.json(kamus_data)
 		end_l=now();
