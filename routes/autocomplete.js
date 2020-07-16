@@ -39,7 +39,7 @@ router.post('/autocomplete/getInput', (req, res,next)=>{
         var correct_word='';
         var correct_words=[];
         let matches = distance[0].filter(distance=>{
-            const regex = new RegExp(`^${inputkeyword}`)
+            const regex = new RegExp(`^${inputkeyword.toLowerCase()}`)
             return distance.match(regex)
         })
         if(matches.length>0){
