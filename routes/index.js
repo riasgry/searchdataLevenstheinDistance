@@ -4,7 +4,7 @@ const app = express();
 const router = express.Router();
 
 router.get('/', (req, res,)=>{
-	request('https://sidabikm.cleverapps.io/api/data_ikm', function(error, response, body){
+	request(process.env.API_URL, function(error, response, body){
 		const json = JSON.parse(body);
 		let page = req.query.page
 		let limit = req.query.limit
